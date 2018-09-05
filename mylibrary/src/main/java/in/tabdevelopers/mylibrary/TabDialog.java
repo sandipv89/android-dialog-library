@@ -5,6 +5,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,42 @@ import java.util.List;
 
 public class TabDialog {
 
-    public static void showDialogList(AppCompatActivity activity, List<Item> items, boolean isMulti, final OnResultListener listener) {
+    public static void showDialogList(AppCompatActivity activity,
+                                      List<Item> items,
+                                      boolean isMulti,
+                                      final OnResultListener listener,
+                                      int colorSelected,
+                                      int colorNormal) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        View dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_items, null);
+        builder.setView(dialogView);
+
+        Button btnOk = dialogView.findViewById(R.id.btnOk);
+        RecyclerView rvItems = dialogView.findViewById(R.id.rvItems);
+
+        final ItemAdapter itemAdapter =
+                new ItemAdapter(activity, items, isMulti, colorSelected, colorNormal);
+        rvItems.setLayoutManager(new LinearLayoutManager(activity));
+        rvItems.setAdapter(itemAdapter);
+
+        final AlertDialog dialog = builder.create();
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                listener.OnResult(itemAdapter.getResult());
+            }
+        });
+
+        dialog.show();
+
+    }
+
+    public static void showDialogList(AppCompatActivity activity,
+                                      List<Item> items,
+                                      boolean isMulti,
+                                      final OnResultListener listener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         View dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_items, null);
         builder.setView(dialogView);
@@ -48,6 +84,15 @@ public class TabDialog {
         private List<Item> items = new ArrayList<>();
         private boolean isMulti = false;
         private List<Item> resultItems = new ArrayList<>();
+        private int colorSelected, colorNormal;
+
+        public ItemAdapter(AppCompatActivity activity, List<Item> items, boolean isMulti, int colorSelected, int colorNormal) {
+            this.activity = activity;
+            this.items = items;
+            this.isMulti = isMulti;
+            this.colorSelected = colorSelected;
+            this.colorNormal = colorNormal;
+        }
 
         public ItemAdapter(AppCompatActivity activity, List<Item> items, boolean isMulti) {
             this.activity = activity;
@@ -67,9 +112,17 @@ public class TabDialog {
             holder.tvTitle.setText(item.getTitle());
             holder.tvSubTitle.setText(item.getSubTitle());
             if (item.isChecked()) {
-                holder.llParent.setBackgroundColor(activity.getResources().getColor(R.color.grey_300));
+                if (!TextUtils.isEmpty(String.valueOf(colorSelected))) {
+                    holder.llParent.setBackgroundColor(colorSelected);
+                } else {
+                    holder.llParent.setBackgroundColor(activity.getResources().getColor(R.color.grey_300));
+                }
             } else {
-                holder.llParent.setBackgroundColor(activity.getResources().getColor(R.color.white));
+                if (!TextUtils.isEmpty(String.valueOf(colorNormal))) {
+                    holder.llParent.setBackgroundColor(colorNormal);
+                } else {
+                    holder.llParent.setBackgroundColor(activity.getResources().getColor(R.color.white));
+                }
             }
 
         }
