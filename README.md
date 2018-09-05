@@ -10,7 +10,7 @@ The simplest way to use this library is to add the library as aar dependency to 
 
     <dependency>
 	    <groupId>com.github.sandipv89</groupId>
-	    <artifactId>android-dialog-library</artifactId>
+	    <artifactId>android-multiitem-select-dialog</artifactId>
 	    <version>0.1.0</version>
 	</dependency>
 
@@ -21,7 +21,7 @@ The simplest way to use this library is to add the library as aar dependency to 
     }
 
     dependencies {
-        implementation 'com.github.sandipv89:android-dialog-library:0.1.0'
+        implementation 'com.github.sandipv89:android-multiitem-select-dialog:0.1.0'
     }
 
 ## Usage
