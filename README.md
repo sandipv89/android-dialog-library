@@ -1,5 +1,5 @@
-# android-dialog-library
-Android item list dialog
+# android-multiitem-select-dialog
+Android multiitem select dialog
 ===================
 Alert dialog for Android, select single item or multiple items as per your requirements.
 
