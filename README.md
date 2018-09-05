@@ -24,6 +24,24 @@ The simplest way to use this library is to add the library as aar dependency to 
         implementation 'com.github.sandipv89:android-multiitem-select-dialog:0.1.0'
     }
 
+
+## Changes in version 0.2.0
+
+now you can change background color of selected item and normal item
+
+You just need to do is to pass color int as given below
+
+	TabDialog.showDialogList(activity, items, false, listener, R.color.grey_300, R.color.white);
+	
+5th parameter
+
+	R.color.grey_300 //selected item backgrond
+	
+6th parameter
+
+	R.color.white //normal item color
+
+
 ## Usage
 
 Import following
